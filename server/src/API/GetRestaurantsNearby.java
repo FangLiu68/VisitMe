@@ -1,8 +1,11 @@
-package API;
+package api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +28,14 @@ public class GetRestaurantsNearby extends HttpServlet {
 	 */
 	public GetRestaurantsNearby() {
 		super();
-		// TODO Auto-generated constructor stub
+		try {
+			// The newInstance() call is a work around for some
+			// broken Java implementations
+
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (Exception ex) {
+			System.out.println("Init JDBC Exception " + ex.getMessage());
+		}
 	}
 
 	/**
@@ -63,8 +73,10 @@ public class GetRestaurantsNearby extends HttpServlet {
 		String line = null;
 		try {
 			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null)
+			while ((line = reader.readLine()) != null) {
 				jb.append(line);
+			}
+			reader.close();
 		} catch (Exception e) { /* report an error */
 		}
 
@@ -79,6 +91,17 @@ public class GetRestaurantsNearby extends HttpServlet {
 				obj.append("city", "Los Angeles");
 				obj.append("lat", lat);
 				obj.append("lon", lon);
+			}
+
+			Connection conn = null;
+			try {
+				conn = DriverManager
+						.getConnection("jdbc:mysql://localhost:8889/mysql?"
+								+ "user=root&password=mypass");
+			} catch (SQLException e) {
+				System.out.println("SQLException " + e.getMessage());
+				System.out.println("SQLState " + e.getSQLState());
+				System.out.println("VendorError " + e.getErrorCode());
 			}
 
 			response.setContentType("application/json");
