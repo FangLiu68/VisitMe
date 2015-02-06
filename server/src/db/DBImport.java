@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public class DBImport {
 
 	public static String parseString(String str) {
-		return str.replace("\"", "\\\"");
+		return str.replace("\"", "\\\"").replace("/", " or ");
 	}
 
 	public static String JSONArrayToString(JSONArray array) {
@@ -35,7 +35,7 @@ public class DBImport {
 
 	public static JSONArray StringToJSONArray(String str) {
 		try {
-			return new JSONArray(str);
+			return new JSONArray("[" + str + "]");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

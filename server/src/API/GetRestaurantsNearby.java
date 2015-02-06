@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import db.DBConnection;
 
 /**
  * Servlet implementation class GetRestaurantsNearby
@@ -22,6 +25,7 @@ import org.json.JSONObject;
 @WebServlet(description = "Get Restaurants near a location with latitude and longitude", urlPatterns = { "/GetRestaurantsNearby" })
 public class GetRestaurantsNearby extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final DBConnection connection = new DBConnection();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -82,32 +86,16 @@ public class GetRestaurantsNearby extends HttpServlet {
 
 		try {
 			JSONObject input = new JSONObject(jb.toString());
-			JSONObject obj = null;
+			JSONArray array = null;
 			if (input.has("lat") && input.has("lon")) {
 				double lat = (Double) input.get("lat");
 				double lon = (Double) input.get("lon");
-				obj = new JSONObject();
-				obj.append("name", "Ramen");
-				obj.append("city", "Los Angeles");
-				obj.append("lat", lat);
-				obj.append("lon", lon);
+				array = connection.GetRestaurantsNearLoation(lat, lon);
 			}
-
-			Connection conn = null;
-			try {
-				conn = DriverManager
-						.getConnection("jdbc:mysql://localhost:8889/mysql?"
-								+ "user=root&password=mypass");
-			} catch (SQLException e) {
-				System.out.println("SQLException " + e.getMessage());
-				System.out.println("SQLState " + e.getSQLState());
-				System.out.println("VendorError " + e.getErrorCode());
-			}
-
 			response.setContentType("application/json");
 			response.addHeader("Access-Control-Allow-Origin", "*");
 			PrintWriter out = response.getWriter();
-			out.print(obj);
+			out.print(array);
 			out.flush();
 			out.close();
 		} catch (JSONException e) {
