@@ -93,9 +93,20 @@ public class DBImport {
 						+ city + "', '" + state + "', " + stars + ", \""
 						+ full_address + "\", " + latitude + "," + longitude
 						+ ")";
-				System.out.println(sql);
+				//System.out.println(sql);
 				stmt.executeUpdate(sql);
 			}
+
+			sql = "DROP TABLE IF EXISTS USERS";
+			stmt.executeUpdate(sql);
+			sql = "CREATE TABLE USERS "
+					+ "(user_id VARCHAR(255) not NULL, "
+					+ " first_name VARCHAR(255), " + "last_name VARCHAR(255), "
+					+ "visited_business_id VARCHAR(255), "
+					+ " PRIMARY KEY ( user_id ))";
+			stmt.executeUpdate(sql);
+			sql = "INSERT INTO USERS " + "VALUES (\"1111\", \"John\", \"Smith\", \"\")";
+			stmt.executeUpdate(sql);
 
 			reader.close();
 			System.out.println("Done Importing");
