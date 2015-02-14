@@ -93,7 +93,7 @@ public class DBImport {
 						+ city + "', '" + state + "', " + stars + ", \""
 						+ full_address + "\", " + latitude + "," + longitude
 						+ ")";
-				//System.out.println(sql);
+				System.out.println(sql);
 				stmt.executeUpdate(sql);
 			}
 
