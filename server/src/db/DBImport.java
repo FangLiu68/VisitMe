@@ -50,8 +50,8 @@ public class DBImport {
 
 			try {
 				conn = DriverManager
-						.getConnection("jdbc:mysql://localhost:8889/mysql?"
-								+ "user=root&password=mypass");
+						.getConnection("jdbc:mysql://localhost:3306/mysql?"
+								+ "user=root&password=root");
 			} catch (SQLException e) {
 				System.out.println("SQLException " + e.getMessage());
 				System.out.println("SQLState " + e.getSQLState());
