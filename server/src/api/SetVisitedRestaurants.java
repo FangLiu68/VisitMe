@@ -3,6 +3,8 @@ package api;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,16 +69,12 @@ public class SetVisitedRestaurants extends HttpServlet {
 			if (input.has("user_id") && input.has("visited")) {
 				String user_id = (String) input.get("user_id");
 				JSONArray array = (JSONArray) input.get("visited");
-				StringBuilder visited_list = new StringBuilder(); 
+				List<String> visited_list = new ArrayList<>(); 
 				for (int i = 0; i < array.length(); i ++) {
 					String business_id = (String) array.get(i);
-					if (i != array.length() - 1) {
-						visited_list.append(business_id + ",");
-					} else {
-						visited_list.append(business_id);
-					}
+					visited_list.add(business_id);
 				}
-				connection.SetVisitedRestaurants(user_id, visited_list.toString());
+				connection.SetVisitedRestaurants(user_id, visited_list);
 			}
 
 			response.setContentType("application/json");

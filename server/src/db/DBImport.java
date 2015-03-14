@@ -65,7 +65,7 @@ public class DBImport {
 			String sql = "DROP TABLE IF EXISTS RESTAURANTS";
 			stmt.executeUpdate(sql);
 			sql = "CREATE TABLE RESTAURANTS "
-					+ "(business_id VARCHAR(255) not NULL, "
+					+ "(business_id VARCHAR(255) NOT NULL, "
 					+ " name VARCHAR(255), " + "categories VARCHAR(255), "
 					+ "city VARCHAR(255), " + "state VARCHAR(255), "
 					+ "stars FLOAT," + "full_address VARCHAR(255), "
@@ -100,12 +100,23 @@ public class DBImport {
 			sql = "DROP TABLE IF EXISTS USERS";
 			stmt.executeUpdate(sql);
 			sql = "CREATE TABLE USERS "
-					+ "(user_id VARCHAR(255) not NULL, "
-					+ " first_name VARCHAR(255), " + "last_name VARCHAR(255), "
-					+ "visited_business_id VARCHAR(255), "
+					+ "(user_id VARCHAR(255) NOT NULL, "
+					+ " first_name VARCHAR(255), last_name VARCHAR(255), "
 					+ " PRIMARY KEY ( user_id ))";
 			stmt.executeUpdate(sql);
-			sql = "INSERT INTO USERS " + "VALUES (\"1111\", \"John\", \"Smith\", \"\")";
+			sql = "INSERT INTO USERS " + "VALUES (\"1111\", \"John\", \"Smith\")";
+			stmt.executeUpdate(sql);
+			
+			sql = "DROP TABLE IF EXISTS USER_VISIT_HISTORY";
+			stmt.executeUpdate(sql);
+			sql = "CREATE TABLE USER_VISIT_HISTORY "
+					+ "(visit_history_id bigint(20) unsigned NOT NULL AUTO_INCREMENT, "
+					+ " user_id VARCHAR(255) NOT NULL , "
+					+ " business_id VARCHAR(255) NOT NULL, " 
+					+ " last_visited_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, "
+					+ " PRIMARY KEY (visit_history_id),"
+					+ "FOREIGN KEY (business_id) REFERENCES RESTAURANTS(business_id),"
+					+ "FOREIGN KEY (user_id) REFERENCES users(user_id))";
 			stmt.executeUpdate(sql);
 
 			reader.close();
