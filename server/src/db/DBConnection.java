@@ -19,8 +19,8 @@ public class DBConnection {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = DriverManager
-					.getConnection("jdbc:mysql://localhost:8889/mysql?"
-							+ "user=root&password=mypass");
+					.getConnection("jdbc:mysql://localhost:3306/mysql?"
+							+ "user=root&password=root");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
