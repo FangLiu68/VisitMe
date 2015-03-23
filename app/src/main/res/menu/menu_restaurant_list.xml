@@ -16,6 +16,6 @@
 
     <item android:id="@+id/action_recommend"
         android:title="Recommend"
-        android:icon="@drawable/ic_action_place"
+        android:icon="@drawable/ic_action_question"
         android:showAsAction="ifRoom" />
 </menu>
