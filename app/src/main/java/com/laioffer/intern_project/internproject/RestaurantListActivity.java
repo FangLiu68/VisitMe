@@ -86,9 +86,9 @@ public class RestaurantListActivity extends Activity {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(List<Restaurant> result) {
-            super.onPostExecute(result);
-            fragment.getRestaurantListAdapter().updateRestaurants(result);
+        protected void onPostExecute(List<Restaurant> restaurants) {
+            super.onPostExecute(restaurants);
+            fragment.getRestaurantListAdapter().updateRestaurants(restaurants);
             fragment.getRestaurantListAdapter().notifyDataSetChanged();
         }
     }

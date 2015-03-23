@@ -69,9 +69,9 @@ public class RestaurantListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Restaurant item = adapter.itemList.get(position);
+        Restaurant restaurant = adapter.restaurants.get(position);
         SetVisitedRestaurantsAsyncTask task = new SetVisitedRestaurantsAsyncTask();
-        task.execute("SetVisitedRestaurants", item.getBusinessId());
+        task.execute("SetVisitedRestaurants", restaurant.getBusinessId());
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
@@ -92,27 +92,27 @@ public class RestaurantListFragment extends ListFragment {
 
     class RestaurantListAdapter extends ArrayAdapter<Restaurant> {
 
-        private List<Restaurant> itemList;
+        private List<Restaurant> restaurants;
         private Context context;
-        RestaurantListAdapter(Context context, List<Restaurant> itemList) {
+        RestaurantListAdapter(Context context, List<Restaurant> restaurants) {
             super(getActivity(), R.layout.fragment_restaurant_list_item, R.id.restaurant_name,
-                    itemList);
-            this.itemList = itemList;
+                    restaurants);
+            this.restaurants = restaurants;
             this.context = context;
         }
         private class ViewHolder {
             TextView titleText;
         }
 
-        public void updateRestaurants(List<Restaurant> list) {
-            this.itemList.clear();
-            this.itemList.addAll(list);
+        public void updateRestaurants(List<Restaurant> restaurants) {
+            this.restaurants.clear();
+            this.restaurants.addAll(restaurants);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            Restaurant item = getItem(position);
+            ViewHolder holder;
+            Restaurant restaurant = getItem(position);
             View viewToUse;
 
             // This block exists to inflate the settings list item conditionally based on whether
@@ -129,7 +129,7 @@ public class RestaurantListFragment extends ListFragment {
                 holder = (ViewHolder) viewToUse.getTag();
             }
 
-            holder.titleText.setText(item.getName());
+            holder.titleText.setText(restaurant.getName());
             return viewToUse;
         }
     }
@@ -142,9 +142,9 @@ public class RestaurantListFragment extends ListFragment {
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(List<Restaurant> result) {
-            super.onPostExecute(result);
-            adapter.updateRestaurants(result);
+        protected void onPostExecute(List<Restaurant> restaurants) {
+            super.onPostExecute(restaurants);
+            adapter.updateRestaurants(restaurants);
             setListAdapter(adapter);
         }
     }
@@ -157,8 +157,8 @@ public class RestaurantListFragment extends ListFragment {
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(List<Restaurant> result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(List<Restaurant> restaurants) {
+            super.onPostExecute(restaurants);
         }
     }
 }
