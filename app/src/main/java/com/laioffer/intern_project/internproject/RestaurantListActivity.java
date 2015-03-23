@@ -16,13 +16,15 @@ public class RestaurantListActivity extends Activity {
 
     public final static String RESTAURANT_LOC = "com.laioffer.internproject.RESTAURANT_LOC";
 
-    private RestaurantListFragment fragment;
+    private RestaurantListFragment listFragment;
+    private RestaurantMapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_restaurant_list);
-        fragment = (RestaurantListFragment) getFragmentManager().findFragmentByTag("fragtag");
+        listFragment = (RestaurantListFragment) getFragmentManager().findFragmentByTag("list_frag");
+        mapFragment = (RestaurantMapFragment) getFragmentManager().findFragmentByTag("map_frag");
     }
 
     /**
@@ -47,7 +49,7 @@ public class RestaurantListActivity extends Activity {
             // Implement the action here!
             GetRestaurantsNearbyAsyncTask task = new GetRestaurantsNearbyAsyncTask();
             task.execute("GetRestaurantsNearby");
-            fragment.getRestaurantListAdapter().notifyDataSetChanged();
+            listFragment.getRestaurantListAdapter().notifyDataSetChanged();
             return true;
         } else if (id == R.id.action_location) {
             switchToMapView(restaurant_loc);
@@ -67,14 +69,18 @@ public class RestaurantListActivity extends Activity {
     // Create the intent and switch to map view activity.
     private void switchToMapView(ArrayList<LatLng> restaurant_loc) {
         Intent intent = new Intent(this, RestaurantMapActivity.class);
-
-        // Fake some loc data here.
-        for (int i = 0; i < 5; ++i) {
-            restaurant_loc.add(i, new LatLng(i, i));
+        restaurant_loc.clear();
+        for (Restaurant restaurant : listFragment.getRestaurantListAdapter().getRestaurants()) {
+            restaurant_loc.add(new LatLng(restaurant.getLatitude(), restaurant.getLongitude()));
         }
-
+        
         intent.putParcelableArrayListExtra(RESTAURANT_LOC, restaurant_loc);
         startActivity(intent);
+    }
+
+
+    private void updateRestaurantsInMap() {
+
     }
 
     // Store the locations of all restaurants.
@@ -90,8 +96,8 @@ public class RestaurantListActivity extends Activity {
         @Override
         protected void onPostExecute(List<Restaurant> restaurants) {
             super.onPostExecute(restaurants);
-            fragment.getRestaurantListAdapter().updateRestaurants(restaurants);
-            fragment.getRestaurantListAdapter().notifyDataSetChanged();
+            listFragment.getRestaurantListAdapter().updateRestaurants(restaurants);
+            listFragment.getRestaurantListAdapter().notifyDataSetChanged();
         }
     }
 
@@ -106,8 +112,8 @@ public class RestaurantListActivity extends Activity {
         @Override
         protected void onPostExecute(List<Restaurant> restaurants) {
             super.onPostExecute(restaurants);
-            fragment.getRestaurantListAdapter().updateRestaurants(restaurants);
-            fragment.getRestaurantListAdapter().notifyDataSetChanged();
+            listFragment.getRestaurantListAdapter().updateRestaurants(restaurants);
+            listFragment.getRestaurantListAdapter().notifyDataSetChanged();
         }
     }
 }

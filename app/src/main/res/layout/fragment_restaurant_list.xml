@@ -4,4 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:name="com.laioffer.intern_project.internproject.RestaurantListFragment"
-    android:tag="fragtag" />
+    android:tag="list_frag" />

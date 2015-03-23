@@ -109,6 +109,10 @@ public class RestaurantListFragment extends ListFragment {
             this.restaurants.addAll(restaurants);
         }
 
+        public List<Restaurant> getRestaurants() {
+            return this.restaurants;
+        }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;

@@ -1,8 +1,11 @@
 package com.laioffer.intern_project.internproject;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -42,6 +45,9 @@ public class RestaurantMapActivity extends FragmentActivity implements OnMapRead
         for (LatLng loc : restaurant_loc) {
             map.addMarker(new MarkerOptions().position(loc).title("Marker"));
         }
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(true);
+
     }
 
     // Store the locations of all restaurants.

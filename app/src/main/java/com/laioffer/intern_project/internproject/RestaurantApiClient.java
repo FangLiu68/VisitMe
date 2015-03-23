@@ -24,7 +24,7 @@ public class RestaurantApiClient {
 
     // If tested in android simulator, this must be the actual ip address of the server, not localhost
     // or 127.0.0.1
-    private static final String BASE_HOSTNAME = "172.17.193.69";
+    private static final String BASE_HOSTNAME = "100.110.124.146";
     private static final String BASE_PORT = "8080";
     private static final String BASE_URL = "http://" + BASE_HOSTNAME + ":" + BASE_PORT + "/Rest/";
 
