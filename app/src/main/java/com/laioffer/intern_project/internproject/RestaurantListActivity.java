@@ -73,7 +73,7 @@ public class RestaurantListActivity extends Activity {
         for (Restaurant restaurant : listFragment.getRestaurantListAdapter().getRestaurants()) {
             restaurant_loc.add(new LatLng(restaurant.getLatitude(), restaurant.getLongitude()));
         }
-        
+
         intent.putParcelableArrayListExtra(RESTAURANT_LOC, restaurant_loc);
         startActivity(intent);
     }

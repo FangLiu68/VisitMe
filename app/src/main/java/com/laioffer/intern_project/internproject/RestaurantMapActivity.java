@@ -45,6 +45,9 @@ public class RestaurantMapActivity extends FragmentActivity implements OnMapRead
         for (LatLng loc : restaurant_loc) {
             map.addMarker(new MarkerOptions().position(loc).title("Marker"));
         }
+        if (!restaurant_loc.isEmpty()) {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurant_loc.get(0), 9));
+        }
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
 
