@@ -13,4 +13,9 @@
           android:title="@string/action_location"
           android:icon="@drawable/ic_action_place"
           android:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_recommend"
+        android:title="Recommend"
+        android:icon="@drawable/ic_action_place"
+        android:showAsAction="ifRoom" />
 </menu>

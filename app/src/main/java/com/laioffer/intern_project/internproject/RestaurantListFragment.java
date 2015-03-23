@@ -50,9 +50,10 @@ public class RestaurantListFragment extends ListFragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public RestaurantListFragment() {
+
     }
 
-    private RestaurantListAdapter adapter;
+    public RestaurantListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,7 @@ public class RestaurantListFragment extends ListFragment {
 
     class RestaurantListAdapter extends ArrayAdapter<Restaurant> {
 
-        private List<Restaurant> itemList;
+        public List<Restaurant> itemList;
         private Context context;
         RestaurantListAdapter(Context context, List<Restaurant> itemList) {
             super(getActivity(), R.layout.fragment_restaurant_list_item, R.id.restaurant_name,
@@ -140,7 +141,7 @@ public class RestaurantListFragment extends ListFragment {
         }
     }
 
-    private static final String BASE_URL = "http://192.168.1.3:8080/Rest/";
+    private static final String BASE_URL = "http://172.17.193.69:8080/Rest/";
 
     private static List<Restaurant> POST(String[] url){
         InputStream inputStream = null;
