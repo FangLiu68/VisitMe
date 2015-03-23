@@ -134,7 +134,7 @@ public class RestaurantListFragment extends ListFragment {
         }
     }
 
-    private class GetRestaurantsNearbyAsyncTask extends AsyncTask<String, Void, List<Restaurant>> {
+    class GetRestaurantsNearbyAsyncTask extends AsyncTask<String, Void, List<Restaurant>> {
 
         @Override
         protected List<Restaurant> doInBackground(String... params) {

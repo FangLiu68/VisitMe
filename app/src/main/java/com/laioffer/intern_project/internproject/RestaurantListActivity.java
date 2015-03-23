@@ -45,6 +45,9 @@ public class RestaurantListActivity extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
             // Implement the action here!
+            GetRestaurantsNearbyAsyncTask task = new GetRestaurantsNearbyAsyncTask();
+            task.execute("GetRestaurantsNearby");
+            fragment.getRestaurantListAdapter().notifyDataSetChanged();
             return true;
         } else if (id == R.id.action_location) {
             switchToMapView(restaurant_loc);
@@ -76,6 +79,21 @@ public class RestaurantListActivity extends Activity {
 
     // Store the locations of all restaurants.
     private ArrayList<LatLng> restaurant_loc = new ArrayList<>();
+
+    class GetRestaurantsNearbyAsyncTask extends AsyncTask<String, Void, List<Restaurant>> {
+
+        @Override
+        protected List<Restaurant> doInBackground(String... params) {
+            return RestaurantApiClient.post(params);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(List<Restaurant> restaurants) {
+            super.onPostExecute(restaurants);
+            fragment.getRestaurantListAdapter().updateRestaurants(restaurants);
+            fragment.getRestaurantListAdapter().notifyDataSetChanged();
+        }
+    }
 
     private class RecommendRestaurantsAsyncTask extends AsyncTask<String, Void, List<Restaurant>> {
 
