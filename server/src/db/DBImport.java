@@ -74,7 +74,7 @@ public class DBImport {
 			stmt.executeUpdate(sql);
 
 			BufferedReader reader = new BufferedReader(new FileReader(
-					"../dataset/business.json"));
+					"../dataset/business_small.json"));
 			while ((line = reader.readLine()) != null) {
 				JSONObject restaurant = new JSONObject(line);
 				String business_id = restaurant.getString("business_id");
