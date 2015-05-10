@@ -26,17 +26,17 @@ public class DBConnection {
 		}
 	}
 
-	public void SetVisitedRestaurants(String user_id, List<String> visited_list) {
+	public void SetVisitedRestaurants(String userId, List<String> businessIds) {
 		try {
 			if (conn == null) {
 				return;
 			}
 			Statement stmt = conn.createStatement();
 			String sql = "";
-			for (String visitedRestaurant : visited_list) {
+			for (String businessId : businessIds) {
 				sql = "INSERT INTO USER_VISIT_HISTORY (`user_id`, `business_id`) VALUES (\"" 
-						+ user_id + "\", \""
-						+ visitedRestaurant + "\")";
+						+ userId + "\", \""
+						+ businessId + "\")";
 				stmt.executeUpdate(sql);
 			}
 			
@@ -146,7 +146,7 @@ public class DBConnection {
 				obj.append("city", rs.getString("city"));
 				obj.append("state", rs.getString("state"));
 				obj.append("categories",
-						DBImport.StringToJSONArray(rs.getString("categories")));
+						DBImport.stringToJSONArray(rs.getString("categories")));
 				list.add(obj);
 			}
 			return new JSONArray(list);

@@ -17,7 +17,7 @@ public class DBImport {
 		return str.replace("\"", "\\\"").replace("/", " or ");
 	}
 
-	public static String JSONArrayToString(JSONArray array) {
+	public static String jsonArrayToString(JSONArray array) {
 		StringBuilder sb = new StringBuilder();
 		try {
 			for (int i = 0; i < array.length(); i++) {
@@ -33,7 +33,7 @@ public class DBImport {
 		return sb.toString();
 	}
 
-	public static JSONArray StringToJSONArray(String str) {
+	public static JSONArray stringToJSONArray(String str) {
 		try {
 			return new JSONArray("[" + str + "]");
 		} catch (JSONException e) {
@@ -79,7 +79,7 @@ public class DBImport {
 				JSONObject restaurant = new JSONObject(line);
 				String business_id = restaurant.getString("business_id");
 				String name = parseString(restaurant.getString("name"));
-				String categories = parseString(JSONArrayToString(restaurant
+				String categories = parseString(jsonArrayToString(restaurant
 						.getJSONArray("categories")));
 				String city = parseString(restaurant.getString("city"));
 				String state = restaurant.getString("state");
