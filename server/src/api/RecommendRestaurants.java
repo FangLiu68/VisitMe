@@ -28,15 +28,7 @@ public class RecommendRestaurants extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public RecommendRestaurants() {
-        super();
-		try {
-			// The newInstance() call is a work around for some
-			// broken Java implementations
-
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (Exception ex) {
-			System.out.println("Init JDBC Exception " + ex.getMessage());
-		}    
+        super();  
 	}
 
 	/**
@@ -76,6 +68,7 @@ public class RecommendRestaurants extends HttpServlet {
 			out.close();
 		} catch (JSONException e) {
 			e.printStackTrace();
-		}	}
+		}	
+	}
 
 }

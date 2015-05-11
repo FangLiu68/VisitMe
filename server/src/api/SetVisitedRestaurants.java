@@ -31,14 +31,6 @@ public class SetVisitedRestaurants extends HttpServlet {
      */
     public SetVisitedRestaurants() {
         super();
-		try {
-			// The newInstance() call is a work around for some
-			// broken Java implementations
-
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (Exception ex) {
-			System.out.println("Init JDBC Exception " + ex.getMessage());
-		}    
     }
 
 	/**

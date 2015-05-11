@@ -56,8 +56,8 @@ public class DBConnection {
 			if (rs.next()) {
 				Set<String> set = new HashSet<>();
 				String[] categories = rs.getString("categories").split(",");
-				for(String categorie : categories) {
-					set.add(categorie.trim());
+				for(String category : categories) {
+					set.add(category.trim());
 				}
 				return set;
 			}
@@ -87,20 +87,29 @@ public class DBConnection {
 		return set;
 	}
 	
-	public JSONArray RecommendRestaurants(String user_id) {
+	private Set<String> getVisitedRestaurants(String userId) {
+		Set<String> visitedRestaurants = new HashSet<String>();
 		try {
-			if (conn == null) {
-				return null;
-			}
 			Statement stmt = conn.createStatement();
-			String sql = "SELECT business_id from USER_VISIT_HISTORY WHERE user_id=" + user_id;
+			String sql = "SELECT business_id from USER_VISIT_HISTORY WHERE user_id="
+					+ userId;
 			ResultSet rs = stmt.executeQuery(sql);
-			Set<String> visitedRestaurants = new HashSet<String>();
 			while (rs.next()) {
 				String visited_restaurant = rs.getString("business_id");
-			    visitedRestaurants.add(visited_restaurant);
+				visitedRestaurants.add(visited_restaurant);
 			}
-			Set<String> allCategories = new HashSet<String>();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return visitedRestaurants;
+	}
+	
+	public JSONArray RecommendRestaurants(String userId) {
+		try {
+			if (conn == null) {return null;}
+
+			Set<String> visitedRestaurants = getVisitedRestaurants(userId);
+			Set<String> allCategories = new HashSet<String>();//why hashSet?
 			for (String restaurant : visitedRestaurants) {
 				allCategories.addAll(getCategories(restaurant));
 			}
@@ -120,7 +129,6 @@ public class DBConnection {
 					}
 				}
 			}
-			
 			return new JSONArray(diff);
 		} catch (Exception e) { /* report an error */
 			System.out.println(e.getMessage());
