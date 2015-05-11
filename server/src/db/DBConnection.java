@@ -68,7 +68,7 @@ public class DBConnection {
 	}
 	
 	private Set<String> getBusinessId(String category) {
-		Set<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 		try {
 			if (conn == null) {
 				return null;
@@ -104,26 +104,53 @@ public class DBConnection {
 		return visitedRestaurants;
 	}
 	
+	private JSONObject getRestaurantsById(String businessId) {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "SELECT business_id, name, full_address, categories, stars, latitude, longitude, city, state from "
+					+ "RESTAURANTS where business_id='" + businessId + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				JSONObject obj = new JSONObject();
+				obj.append("business_id", rs.getString("business_id"));
+				obj.append("name", rs.getString("name"));
+				obj.append("stars", rs.getFloat("stars"));
+				obj.append("latitude", rs.getFloat("latitude"));
+				obj.append("longitude", rs.getFloat("longitude"));
+				obj.append("full_address", rs.getString("full_address"));
+				obj.append("city", rs.getString("city"));
+				obj.append("state", rs.getString("state"));
+				obj.append("categories",
+						DBImport.stringToJSONArray(rs.getString("categories")));
+				return obj;
+			}
+		} catch (Exception e) { /* report an error */
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
 	public JSONArray RecommendRestaurants(String userId) {
 		try {
 			if (conn == null) {return null;}
 
 			Set<String> visitedRestaurants = getVisitedRestaurants(userId);
-			Set<String> allCategories = new HashSet<String>();//why hashSet?
+			Set<String> allCategories = new HashSet<>();//why hashSet?
 			for (String restaurant : visitedRestaurants) {
 				allCategories.addAll(getCategories(restaurant));
 			}
-			Set<String> allRestaurants = new HashSet<String>();
+			Set<String> allRestaurants = new HashSet<>();
 			for (String category : allCategories) {
 				Set<String> set = getBusinessId(category);
 				allRestaurants.addAll(set);
 			}
-			Set<String> diff = new HashSet<String>();
+			Set<JSONObject> diff = new HashSet<>();
 			int count = 0;
 			for (String business_id : allRestaurants) {
 				if (!visitedRestaurants.contains(business_id)) {
-					diff.add(business_id);
+					diff.add(getRestaurantsById(business_id));
 					count ++;
+					
 					if (count >= MAX_RECOMMENDED_RESTAURANTS) {
 						break;
 					}
@@ -142,7 +169,7 @@ public class DBConnection {
 				return null;
 			}
 			Statement stmt = conn.createStatement();
-			String sql = "SELECT business_id, name, full_address, categories, stars, city, state from RESTAURANTS LIMIT 10";
+			String sql = "SELECT business_id, name, full_address, categories, stars, latitude, longitude, city, state from RESTAURANTS LIMIT 10";
 			ResultSet rs = stmt.executeQuery(sql);
 			List<JSONObject> list = new ArrayList<JSONObject>();
 			while (rs.next()) {
@@ -150,6 +177,8 @@ public class DBConnection {
 				obj.append("business_id", rs.getString("business_id"));
 				obj.append("name", rs.getString("name"));
 				obj.append("stars", rs.getFloat("stars"));
+				obj.append("latitude", rs.getFloat("latitude"));
+				obj.append("longitude", rs.getFloat("longitude"));
 				obj.append("full_address", rs.getString("full_address"));
 				obj.append("city", rs.getString("city"));
 				obj.append("state", rs.getString("state"));
