@@ -83,7 +83,7 @@ public class DBImport {
 						.getJSONArray("categories")));
 				String city = parseString(restaurant.getString("city"));
 				String state = restaurant.getString("state");
-				String full_address = parseString(restaurant
+				String fullAddress = parseString(restaurant
 						.getString("full_address"));
 				double stars = restaurant.getDouble("stars");
 				double latitude = restaurant.getDouble("latitude");
@@ -91,7 +91,7 @@ public class DBImport {
 				sql = "INSERT INTO RESTAURANTS " + "VALUES ('" + business_id
 						+ "', \"" + name + "\", \"" + categories + "\", '"
 						+ city + "', '" + state + "', " + stars + ", \""
-						+ full_address + "\", " + latitude + "," + longitude
+						+ fullAddress + "\", " + latitude + "," + longitude
 						+ ")";
 				System.out.println(sql);
 				stmt.executeUpdate(sql);
