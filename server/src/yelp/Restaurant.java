@@ -32,7 +32,7 @@ public class Restaurant {
 				this.longitude = coordinate.getDouble("longitude");
 				this.city = location.getString("city");
 				this.state = location.getString("state_code");
-				this.fullAddress = ((JSONArray) location.get("address")).get(0).toString();
+				this.fullAddress = ((JSONArray) location.get("display_address")).get(0).toString();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,5 +92,4 @@ public class Restaurant {
 	public String getImageUrl() {
 		return this.imageUrl;
 	}
-
 }

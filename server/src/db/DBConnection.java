@@ -113,7 +113,7 @@ public class DBConnection {
 		try {
 			Statement stmt = conn.createStatement();
 			String sql = "SELECT business_id, name, full_address, categories, stars, latitude, longitude, city, state from "
-					+ "RESTAURANTS where business_id='" + businessId + "'";
+					+ "RESTAURANTS where business_id='" + businessId + "'" + " ORDER BY stars DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				JSONObject obj = new JSONObject();

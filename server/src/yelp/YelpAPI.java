@@ -65,10 +65,10 @@ public class YelpAPI {
 			response = new JSONObject(searchResponseJSON);
 			JSONArray businesses = (JSONArray) response.get("businesses");
 			for (int i = 0; i < businesses.length(); i++) {
-				JSONObject firstBusiness = (JSONObject) businesses.get(i);
-				String businessID = firstBusiness.get("id").toString();
+				JSONObject business = (JSONObject) businesses.get(i);
+				String businessID = business.get("id").toString();
 				System.out.println("BusinessId: " + businessID);
-				System.out.println(firstBusiness);
+				System.out.println(business);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
