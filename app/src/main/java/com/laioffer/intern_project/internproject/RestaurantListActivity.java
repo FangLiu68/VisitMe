@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.content.Context;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ public class RestaurantListActivity extends Activity {
 
     private RestaurantListFragment listFragment;
     private RestaurantMapFragment mapFragment;
+    private LocationManager mManager;
+    private MyLocationListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,9 @@ public class RestaurantListActivity extends Activity {
         setContentView(R.layout.fragment_restaurant_list);
         listFragment = (RestaurantListFragment) getFragmentManager().findFragmentByTag("list_frag");
         mapFragment = (RestaurantMapFragment) getFragmentManager().findFragmentByTag("map_frag");
+        mManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        mListener = new MyLocationListener();
+        mManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mListener);
     }
 
     /**
@@ -48,7 +55,7 @@ public class RestaurantListActivity extends Activity {
         if (id == R.id.action_refresh) {
             // Implement the action here!
             GetRestaurantsNearbyAsyncTask task = new GetRestaurantsNearbyAsyncTask();
-            task.execute("GetRestaurantsNearby");
+            task.execute("GetRestaurantsNearby", Double.toString(mListener.getLat()), Double.toString(mListener.getLon()));
             listFragment.getRestaurantListAdapter().notifyDataSetChanged();
             return true;
         } else if (id == R.id.action_location) {

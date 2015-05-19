@@ -24,13 +24,11 @@ public class RestaurantApiClient {
 
     // If tested in android simulator, this must be the actual ip address of the server, not localhost
     // or 127.0.0.1
-    private static final String BASE_HOSTNAME = "100.110.124.146";
+    private static final String BASE_HOSTNAME = "192.168.1.3";
     private static final String BASE_PORT = "8080";
     private static final String BASE_URL = "http://" + BASE_HOSTNAME + ":" + BASE_PORT + "/Rest/";
 
     private RestaurantApiClient() {}
-
-
 
     public static List<Restaurant> post(String[] url){
         InputStream inputStream;
@@ -51,8 +49,10 @@ public class RestaurantApiClient {
 
             switch (url[0]) {
                 case "GetRestaurantsNearby":
-                    jsonObject.accumulate("lat", 30.1);
-                    jsonObject.accumulate("lon", 20.2);
+                    double lat = Double.parseDouble(url[1]);
+                    double lon = Double.parseDouble(url[2]);
+                    jsonObject.accumulate("lat", lat);
+                    jsonObject.accumulate("lon", lon);
                     break;
                 case "SetVisitedRestaurants":
                     JSONArray array = new JSONArray();
@@ -90,7 +90,6 @@ public class RestaurantApiClient {
                     JSONObject object = (JSONObject) array.get(i);
                     result.add(new Restaurant(object));
                 }
-
             }
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
