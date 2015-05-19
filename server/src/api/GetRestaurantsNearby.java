@@ -79,7 +79,8 @@ public class GetRestaurantsNearby extends HttpServlet {
 			if (input.has("lat") && input.has("lon")) {
 				double lat = (Double) input.get("lat");
 				double lon = (Double) input.get("lon");
-				array = connection.GetRestaurantsNearLoation(lat, lon);
+				//array = connection.GetRestaurantsNearLoation(lat, lon);
+				array = connection.GetRestaurantsNearLoationViaYelpAPI(lat, lon);
 			}
 			response.setContentType("application/json");
 			response.addHeader("Access-Control-Allow-Origin", "*");
