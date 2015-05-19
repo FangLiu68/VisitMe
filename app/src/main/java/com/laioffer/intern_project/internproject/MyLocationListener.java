@@ -8,8 +8,8 @@ import android.os.Bundle;
  */
 public class MyLocationListener implements LocationListener
 {
-    private double lat = 0.0;
-    private double lon = 0.0;
+    private double lat = 37.3939;
+    private double lon = -122.079;
     public double getLat() {
         return this.lat;
     }
