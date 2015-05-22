@@ -82,7 +82,6 @@ public class DBYelpImport {
 			sql = "INSERT INTO USERS " + "VALUES (\"1111\", \"John\", \"Smith\")";
 			stmt.executeUpdate(sql);
 			
-
 			sql = "CREATE TABLE USER_VISIT_HISTORY "
 					+ "(visit_history_id bigint(20) unsigned NOT NULL AUTO_INCREMENT, "
 					+ " user_id VARCHAR(255) NOT NULL , "
